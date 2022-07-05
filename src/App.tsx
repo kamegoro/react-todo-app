@@ -9,6 +9,17 @@ const App: FC = () => {
     const [value, setValue] = useState<string>('')
     const [items, setItems] = useState<Item[]>([]);
 
+    function addItem(): void {
+        const item: Item = {
+            id: Date.now(),
+            content: value
+        }
+        setItems([...items, item])
+        setValue(``)
+    }
+    console.log(value)
+    console.log(items)
+
     useEffect(() => {
         (async () => {
             
@@ -20,7 +31,19 @@ const App: FC = () => {
             <p>TODO APP</p>
             <div>
                 <input type="text" value={value} onChange={(event) => setValue(event.target.value)} />
-                <button>送信</button>
+                <button onClick={() => addItem()} disabled={!value}>送信</button>
+            </div>
+            <div>
+                <ul>
+                    {items.map(v => {
+                        return (
+                            <li>
+                                <p>{v.id}</p>
+                                <button>削除</button>
+                            </li>
+                        )
+                    })}
+                </ul>
             </div>
         </div>
     )
